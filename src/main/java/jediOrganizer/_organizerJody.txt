@@ -1,0 +1,72 @@
+ORGANIZER JODY
+
+zakony:
+Je'daii
+Zakon Jedi
+-Yoda
+-Mace Windu
+-Qui-Gon Jinn
+-Obi-Wan Kenobi
+-Anakin Skywalker
+Sithowie
+-Darth Revan
+-Darth Vader
+Siostry Nocy
+-Asajj Ventress
+-Matka Talzin
+-Karis
+Bractwo Ciemności
+-Darth Bane
+Zakon Dartha Krayta
+-Darth Krayt
+-Darth Talon
+-Darth Nihl
+-Darth Ruyn
+
+
+
+
+Zakon Dai Bendu
+
+model
+-zakonJedi
+-jedi
+view
+-jFrames JPanels
+controller
+-actionbuttons
+dao (Data Access Object)
+-zapis do postgresql
+-szyfrowanie eksportow
+-deszyfrowanie importów
+
+
+
+muzyczka ze starwars, wyciszana ze zminimalizowaniem okna:
+https://www.youtube.com/watch?v=_D0ZQPqeJkk
+
+----------------
+MVC-SERVICES-DAO
+----------------
+In my opinion, you have to distinguish between the MVC pattern and the 3-tier architecture. To sum up:
+3-tier architecture:
+    data: persisted data;
+    service: logical part of the application;
+    presentation: hmi, webservice...
+
+The MVC pattern takes place in the presentation tier of the above architecture (for a webapp):
+    data: ...;
+    service: ...;
+    presentation:
+        controller: intercepts the HTTP request and returns the HTTP response;
+        model: stores data to be displayed/treated;
+        view: organises output/display.
+
+Life cycle of a typical HTTP request:
+    The user sends the HTTP request;
+    The controller intercepts it;
+    The controller calls the appropriate service;
+    The service calls the appropriate dao, which returns some persisted data (for example);
+    The service treats the data, and returns data to the controller;
+    The controller stores the data in the appropriate model and calls the appropriate view;
+    The view get instantiated with the model's data, and get returned as the HTTP response.
