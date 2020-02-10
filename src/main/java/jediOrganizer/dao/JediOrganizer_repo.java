@@ -33,12 +33,15 @@ public class JediOrganizer_repo {
     public static void addZakonJediToDB (ZakonJedi zakonJedi) {
         connectDB();
         try {
-            String sql = "INSERT INTO ZakonJedi (IDZakon, name)" +
-                    " VALUES (?, ?)";
+            //ZakonJedi(IDZakon, name) values (?, ?)
+            String sql = "INSERT INTO ?(?, ?) VALUES (?, ?)";
             PreparedStatement preparedStatement =
                     connection.prepareStatement(sql);
-            preparedStatement.setInt(1, zakonJedi.getIDZakon());
-            preparedStatement.setString(2, zakonJedi.getName());
+            preparedStatement.setString(1, "ZakonJedi");
+            preparedStatement.setString(2, "IDZakon");
+            preparedStatement.setString(3, "name");
+            preparedStatement.setInt(4, zakonJedi.getIDZakon());
+            preparedStatement.setString(5, zakonJedi.getName());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,16 +51,25 @@ public class JediOrganizer_repo {
     public static void addJediToDB(Jedi jedi) {
         connectDB();
         try {
-            String sql = "INSERT INTO Jedi (IDJedi, name, color, power, side, zakonID)" +
+            //jedi(IDJedi, name, color, power, side, zakonID)
+            String sql = "INSERT INTO ?(?,?,?,?,?,?)" +
                     " VALUES (?, ?, ?, ?, ?, ?)";
 
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setInt(1, jedi.getIDJedi());
-            preparedStatement.setString(2, jedi.getName());
-            preparedStatement.setString(3, jedi.getColor());
-            preparedStatement.setInt(4, jedi.getPower());
-            preparedStatement.setString(5, jedi.getSide());
-            preparedStatement.setInt(6, jedi.getZakonID());
+            preparedStatement.setString(1, "jedi");
+            preparedStatement.setString(2, "IDJedi");
+            preparedStatement.setString(3, "name");
+            preparedStatement.setString(4, "color");
+            preparedStatement.setString(5, "power");
+            preparedStatement.setString(6, "side");
+            preparedStatement.setString(7, "zakonID");
+
+            preparedStatement.setInt(8, jedi.getIDJedi());
+            preparedStatement.setString(9, jedi.getName());
+            preparedStatement.setString(10, jedi.getColor());
+            preparedStatement.setInt(11, jedi.getPower());
+            preparedStatement.setString(12, jedi.getSide());
+            preparedStatement.setInt(13, jedi.getZakonID());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -70,8 +82,9 @@ public class JediOrganizer_repo {
         connectDB();
         List<ZakonJedi> resultDB_zakonJediList = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM ZakonJedi";
+            String sql = "SELECT * FROM ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "zakonjedi");
             ResultSet queryResultSet = preparedStatement.executeQuery();
 
             while (queryResultSet.next()) {
@@ -94,8 +107,9 @@ public class JediOrganizer_repo {
         connectDB();
         List<Jedi> resultDB_jediList = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM Jedi";
+            String sql = "SELECT * FROM ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, "jedi");
             ResultSet queryResultSet = preparedStatement.executeQuery();
             while (queryResultSet.next()) {
                 int idJedi = queryResultSet.getInt("IDJedi");
@@ -142,7 +156,7 @@ public class JediOrganizer_repo {
             statement.execute("CREATE TABLE ZakonJedi(IDZakon int PRIMARY KEY, Name varchar(50));");
             statement.execute("create table Jedi(IDJedi int, name varchar(50), color varchar(50), " +
                     "power int, side varchar(15), ZakonID int, " +
-                    "PRIMARY KEY(IDJedi), FOREIGN KEY(ZakonID) REFERENCES ZakonJedi(IDZakon));");
+                    "PRIMARY KEY(IDJedi), FOREIGN KEY(ZakonID) REFERENCES zakonjedi(IDZakon));");
             System.out.println("Created tables: ZakonJedi, Jedi");
             statement.close();
         } catch (SQLException e) {

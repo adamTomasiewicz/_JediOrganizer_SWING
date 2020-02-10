@@ -1,8 +1,13 @@
+#git commit -m"gitignore and target cleanup"
+
 # Compiled class file
 *.class
 
 # Log file
 *.log
+
+# Target and build:
+target/
 
 # BlueJ files
 *.ctxt
